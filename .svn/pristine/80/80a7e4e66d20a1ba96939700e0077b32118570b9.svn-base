@@ -1,0 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package MapReduceServer.Abstract;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author sezin
+ */
+public interface Task extends Serializable{
+    // Exported operations.
+
+	/**
+	 * Map this task's input to this task's result. This task's input is stored
+	 * inside this task object.
+	 *
+	 * @return  Task result.
+	 *
+	 * @exception  Exception
+	 *     The <TT>map()</TT> method may throw any checked exception.
+	 */
+	public Object map()
+		throws Exception;
+}

@@ -1,0 +1,70 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package MapReduceClient;
+
+/**
+ *
+ * @author sezin
+ */
+
+import MapReduceServer.Abstract.Manager;
+import java.io.IOException;
+import RSS.model.Feed;
+import RSS.model.FeedMessage;
+import RSS.read.RSSFeedParser;
+import java.rmi.*;
+import java.rmi.server.*;
+
+public class MRClient implements Remote {
+    
+    public static void main(String[] args) throws IOException {
+        
+        RSSFeedParser parser = new RSSFeedParser("http://cacm.acm.org/browse-by-subject/artificial-intelligence.rss");
+        Feed feed = parser.readFeed();
+        
+//        String hostname = "localhost";
+//        int port=1199; 
+//        String  managerName="MapReduceManager";
+//        System.out.println("**************************************************************************************");
+//
+//try{
+//        Manager manager =(Manager) Naming.lookup(managerName);
+//        manager.Handle(feed);
+//}
+//catch(NotBoundException e)
+//{
+//System.out.println("Unbound exception should be handled");
+//}
+ 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*Test RSS reader
+        *Here we need to keep a list of RSS feed URLs and according to the 
+        *input coming from the client, we should parse the related rss feeds
+        *parse them and then open the links inside the messages and pass them
+        *to the mappers for processing
+        */
+//        RSSFeedParser parser = new RSSFeedParser("http://cacm.acm.org/browse-by-subject/artificial-intelligence.rss");
+//        Feed feed = parser.readFeed();
+        System.out.println(feed);
+        
+        for (FeedMessage message : feed.getMessages()) {
+            System.out.println(message);
+        }
+
+        
+        
+    }
+}

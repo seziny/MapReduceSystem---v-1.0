@@ -1,0 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package MapReduceServer.Abstract;
+
+/**
+ *
+ * @author sohailabaset
+ */
+public interface TaskResult {
+    public String Error="";
+    public Object Value=null;
+}

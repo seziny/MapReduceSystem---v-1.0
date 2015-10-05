@@ -1,0 +1,104 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package MapReduceServer.Implementation;
+
+import MapReduceServer.Abstract.Job;
+import MapReduceServer.Abstract.Mapper;
+import MapReduceServer.Abstract.Reducer;
+import MapReduceServer.Abstract.Task;
+import MapReduceServer.Abstract.TaskResult;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
+
+
+/**
+ *
+ * @author sohailabaset
+ */
+public class ReducerService implements Reducer{
+
+    public String name() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object run(Job job) throws Exception
+		{
+		try
+			{
+			System.out.println("running job "+job);
+			//slowDown();
+
+			// Get the job's tasks and put them in a queue.
+			LinkedBlockingQueue<Task> taskQueue =
+				new LinkedBlockingQueue<Task>();
+			for (Task task : job) taskQueue.add (task);
+			int queueSize = taskQueue.size();
+
+			// Set up a queue of task results.
+			LinkedBlockingQueue<TaskResult> resultQueue =
+				new LinkedBlockingQueue<TaskResult>();
+
+			// Get the names of all registered distributed mapper objects.
+			List<String> mapperNameList = null;//proxy.list ("Mapper");
+
+			// Obtain mapper object references until there is one mapper for
+			// each task or there are no more mappers.
+			LinkedList<Mapper> mapperList = new LinkedList<Mapper>();
+			Iterator<String> iter = mapperNameList.iterator();
+			while (iter.hasNext() && mapperList.size() < queueSize)
+				{
+				String mapperName = iter.next();
+				try
+					{
+					Mapper mapper = null;//(Mapper) proxy.lookup (mapperName);
+					mapperList.add (mapper);
+					}
+				catch (Exception exc)
+					{
+					}
+				}
+			if (mapperList.size() == 0)
+				{
+				throw new IllegalStateException
+					("ReducerService.run(): No mapper objects available");
+				}
+
+			// Reduce task results; 
+			int m = 0;
+			while (m < queueSize)
+				{
+				TaskResult tr = resultQueue.take();
+				if (tr.Error != null)
+					{
+					// log error
+					}
+				else
+					{
+					try
+						{
+						job.reduce (tr);
+						}
+					catch (Throwable exc)
+						{
+						// do something about the exception 
+						}
+					}
+				++ m;
+				}
+
+
+			// Return overall job result.
+			return job.jobResult();
+			}
+
+		finally
+			{
+			System.out.println ("idle");
+			}
+		}    }
+    
+

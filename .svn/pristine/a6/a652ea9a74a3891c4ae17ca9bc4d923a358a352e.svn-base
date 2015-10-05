@@ -1,0 +1,24 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package MapReduceServer.Implementation;
+
+import MapReduceServer.Abstract.Mapper;
+import MapReduceServer.Abstract.Task;
+
+/**
+ *
+ * @author sohailabaset
+ */
+public class MapperService implements Mapper{
+
+    public String name() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object run(Task task) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+}
